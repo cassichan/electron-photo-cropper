@@ -10,6 +10,7 @@ export default function Hello() {
         <Link to="/photo">
           <button type="button">
             <span role="img" aria-label="camera"></span>
+            Crop Photo
           </button>
         </Link>
       </div>
