@@ -15,6 +15,7 @@ import log from 'electron-log';
 import MenuBuilder from './menu';
 import { resolveHtmlPath } from './util';
 
+// Checks for updates to the app
 class AppUpdater {
   constructor() {
     log.transports.file.level = 'info';
@@ -25,6 +26,7 @@ class AppUpdater {
 
 let mainWindow: BrowserWindow | null = null;
 
+// Listening for an ipc event and sending message back
 ipcMain.on('ipc-example', async (event, arg) => {
   const msgTemplate = (pingPong: string) => `IPC test: ${pingPong}`;
   console.log(msgTemplate(arg));
@@ -69,10 +71,11 @@ const createWindow = async () => {
     return path.join(RESOURCES_PATH, ...paths);
   };
 
+  //Sets window size
   mainWindow = new BrowserWindow({
     show: false,
-    width: 1024,
-    height: 728,
+    width: 1280,
+    height: 1024,
     icon: getAssetPath('icon.png'),
     webPreferences: {
       sandbox: false,
@@ -119,7 +122,7 @@ const createWindow = async () => {
 
 app.on('window-all-closed', () => {
   // Respect the OSX convention of having the application in memory even
-  // after all windows have been closed
+  // after all windows have been closed (unless mac)
   if (process.platform !== 'darwin') {
     app.quit();
   }
