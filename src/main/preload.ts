@@ -3,6 +3,9 @@ import { contextBridge, ipcRenderer, IpcRendererEvent } from 'electron';
 export type Channels = 'ipc-example';
 
 contextBridge.exposeInMainWorld('electron', {
+  //Created our own method/saveCroppedImage that can be triggered from renderer. send event to main called "image-save"
+  //args will be array with file image and file data
+  saveCroppedImage: (args: unknown[]) => ipcRenderer.send('image-save', args),
   ipcRenderer: {
     sendMessage(channel: Channels, args: unknown[]) {
       ipcRenderer.send(channel, args);
